@@ -13,6 +13,12 @@
 @import url(./blocks/authorization/__button/authorization__button.css);
 @import url(./blocks/authorization/__title/authorization__title.css);
 
+@import url(./blocks/prompt/prompt.css);
+@import url(./blocks/prompt/__image/prompt__image.css);
+@import url(./blocks/prompt/__info/prompt__info.css);
+@import url(./blocks/prompt/__text/prompt__text.css);
+@import url(./blocks/prompt/__container/prompt__container.css);
+
 @import url(./blocks/card/card.css);
 @import url(./blocks/card/__heading/card__heading.css);
 @import url(./blocks/card/__title/card__title.css);

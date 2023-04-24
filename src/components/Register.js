@@ -1,13 +1,12 @@
 import {Header} from "./Header";
 import React from "react";
-import {Footer} from "./Footer";
 import {Authorization} from "./Authorization";
 import {Link} from "react-router-dom";
 
 export function Register() {
     return (
         <>
-            <Header text="Войти" way="/sign-in"/>
+            <Header text="Войти" way="/sign-in" />
             <Authorization text="Регистрация" id="register" buttonName="Зарегистрироваться"/>
             <p style={{color: "white",
                 padding: 0,
@@ -15,8 +14,8 @@ export function Register() {
                 textAlign:"center",
                 fontSize: "14px",
                 lineHeight: '17px'
-            }}>Уже зарегистрированы? <Link to="/sign-in/" style={{color: "white", textDecoration: "none"}}>Войти</Link></p>
-            <Footer />
+            }}>
+                Уже зарегистрированы? <Link to="/sign-in" style={{color: "white", textDecoration: "none"}}>Войти</Link></p>
         </>
     )
 }

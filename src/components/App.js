@@ -13,6 +13,7 @@ import {AddPlacePopup} from "./AddPlacePopup";
 import {ConfirmationPopup} from "./ConfirmationPopup";
 import {Routes, Route} from "react-router-dom";
 import {ProtectedRouteElement} from "./ProtectedRoute";
+import {InfoToolTip} from "./InfoToolTip";
 
 function App() {
     const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
@@ -190,6 +191,7 @@ function App() {
                 onClose={closeAllPopups}
             />
             )}
+            <InfoToolTip />
         </CurrentUserContext.Provider>
       );
     }

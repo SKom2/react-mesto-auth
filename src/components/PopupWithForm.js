@@ -14,7 +14,7 @@ export function PopupWithForm({button, children, isLoad, isOpen, isValid, loadBu
 
 
     return (
-            <div className={`popup ${isOpen ? "popup_opened" : ""}`} id={`popup_${name}`} onClick={onClose}>
+        <div className={`popup ${isOpen ? "popup_opened" : ""}`} id={`popup_${name}`} onClick={onClose}>
             <div className="popup__container" onClick={e => e.stopPropagation()}>
                 <button type="button" className="popup__close" onClick={onClose}></button>
                 <form className="popup__form form" id={`${name}_form`} noValidate name={name} onSubmit={onSubmit}>

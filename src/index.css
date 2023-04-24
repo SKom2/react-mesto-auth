@@ -8,6 +8,11 @@
 
 @import url(./blocks/button/button.css);
 
+@import url(./blocks/authorization/authorization.css);
+@import url(./blocks/authorization/__form/authorization__form.css);
+@import url(./blocks/authorization/__button/authorization__button.css);
+@import url(./blocks/authorization/__title/authorization__title.css);
+
 @import url(./blocks/card/card.css);
 @import url(./blocks/card/__heading/card__heading.css);
 @import url(./blocks/card/__title/card__title.css);
@@ -28,11 +33,13 @@
 @import url(./blocks/form/__input-error/_visible/form__input-error_visible.css);
 @import url(./blocks/form/__input/_el/form__input_el_heading.css);
 @import url(./blocks/form/__input/_el/form__input_el_subheading.css);
+@import url(./blocks/form/__input/_el/form__input_el_authorization.css);
 @import url(./blocks/form/__button/form__button.css);
 @import url(./blocks/form/__button/_inactive/form__button_inactive.css);
 
 @import url(./blocks/header/header.css);
 @import url(./blocks/header/__logo/header__logo.css);
+@import url(./blocks/header/__link/header__link.css);
 
 @import url(./blocks/main/main.css);
 @import url(./blocks/main/__profile/main__profile.css);

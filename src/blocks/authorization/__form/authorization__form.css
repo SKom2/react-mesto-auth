@@ -1,0 +1,11 @@
+.authorization__form{
+    padding: 50px 0 216px;
+    max-width: 358px;
+    margin: 0 auto;
+}
+
+@media screen and (max-width: 424px) {
+    .authorization__form{
+        padding: 40px 0 173px;
+    }
+}

@@ -1,0 +1,8 @@
+.form__input_el_authorization{
+    background-color: transparent;
+    border-bottom: 2px solid #CCCCCC;
+}
+
+.form__input_el_authorization:not(:last-child){
+    margin-bottom: 30px;
+}

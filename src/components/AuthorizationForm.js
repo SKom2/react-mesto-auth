@@ -2,7 +2,7 @@
         return(
             <div className="authorization root__container" id={`${props.name}`}>
                 <h1 className="authorization__title">{props.text}</h1>
-                <form className="authorization__form" onSubmit={props.onSubmit}>
+                <form className="authorization__form" onSubmit={props.onSubmit} noValidate>
                     {props.children}
                     <button className={`authorization__button`} type="submit">{props.buttonName}</button>
                 </form>

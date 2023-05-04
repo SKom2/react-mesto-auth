@@ -16,7 +16,7 @@ import {ProtectedRouteElement} from "./ProtectedRoute";
 import {InfoToolTip} from "./InfoToolTip";
 import * as Auth from "../modules/Auth";
 
-function App({history}) {
+function App() {
     const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
     const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
     const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
@@ -51,40 +51,37 @@ function App({history}) {
         if (jwt){
             Auth.getContent(jwt).then((res) => {
                 if (res){
-                    const userData = {
-                        email: res.email
-                    }
                     setIsLoggedIn(true);
-                    setUserData(userData)
+                    setUserData({email: res.data.email})
                     navigate("/mesto-react/", {replace: true})
                 }
             });
         }
     }, [])
 
-    function registerUser(values, isValid, navigate) {
+    function registerUser(values, isValid) {
         if (isValid) {
             Auth.register(values.email, values.password)
-                .then((res) => {
+                .then(() => {
                     navigate('/mesto-react/sign-in', {replace: true})
                     setIsSuccessful(true)
                     setInfoToolTipOpen(true)
                 })
-                .catch((err) => {
+                .catch(() => {
                     setIsSuccessful(false)
                     setInfoToolTipOpen(true)
                 });
         }
     }
 
-    function loginUser(values, isValid, navigate) {
+    function loginUser(values, isValid) {
         if (isValid) {
             Auth.authorize(values.email, values.password)
                 .then((res) => {
                     localStorage.setItem('jwt', res.token)
-                    navigate('/mesto-react', {replace: true})
+                    navigate('/mesto-react/', {replace: true})
                 })
-                .catch((err) => {
+                .catch(() => {
                     setIsSuccessful(false)
                     setInfoToolTipOpen(true)
                 });

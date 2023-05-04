@@ -1,6 +1,6 @@
 import {Header} from "./Header";
 import React from "react";
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {Input} from "./Input";
 import {AuthorizationForm} from "./AuthorizationForm";
 import {useForm} from "../hooks/useForm";
@@ -10,12 +10,11 @@ export function Register(props) {
         email: '',
         password: ''
     });
-    const navigate = useNavigate()
 
     function handleSubmit(e) {
         e.preventDefault();
         console.log(values)
-        props.registerUser(values, isValid, navigate)
+        props.registerUser(values, isValid)
     }
 
     return (

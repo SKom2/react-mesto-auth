@@ -12,3 +12,8 @@
     opacity: 0;
     transition: all 0.3s ease-in-out;
 }
+
+.prompt_opened{
+    visibility: initial;
+    opacity: 1;
+}

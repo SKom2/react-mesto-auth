@@ -4,7 +4,10 @@ import {useForm} from "../hooks/useForm";
 import {useEffect} from "react";
 
 export function AddPlacePopup(props) {
-    const { values, handleChange, resetForm, errors, isValid, setErrors, setIsValid } = useForm();
+    const { values, handleChange, resetForm, errors, isValid, setErrors, setIsValid } = useForm({
+        name: '',
+        link: ''
+    });
 
     function handleSubmit(evt) {
         evt.preventDefault()

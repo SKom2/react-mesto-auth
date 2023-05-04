@@ -4,7 +4,9 @@ import {useForm} from "../hooks/useForm";
 import {useEffect} from "react";
 
 export function EditAvatarPopup(props) {
-    const { values, handleChange, resetForm, errors, isValid, setIsValid, setErrors } = useForm();
+    const { values, handleChange, resetForm, errors, isValid, setIsValid, setErrors } = useForm({
+        avatar: ''
+    });
 
     function handleSubmit(e) {
         e.preventDefault();

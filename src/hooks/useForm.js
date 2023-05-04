@@ -1,7 +1,7 @@
-import { useState, useCallback } from 'react';
+import {useState, useCallback} from 'react';
 
-export const useForm = () => {
-    const [values, setValues] = useState({});
+export const useForm = (initialState) => {
+    const [values, setValues] = useState(initialState);
     const [errors, setErrors] = useState({});
     const [isValid, setIsValid] = useState(false);
 
@@ -9,8 +9,8 @@ export const useForm = () => {
         const input = evt.target;
         const name = input.name;
         const value = input.value;
-        setValues({ ...values, [name]: value });
-        setErrors({ ...errors, [name]: input.validationMessage });
+        setValues({...values, [name]: value});
+        setErrors({...errors, [name]: input.validationMessage});
         setIsValid(input.closest('form').checkValidity());
     };
 

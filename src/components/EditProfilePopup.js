@@ -6,7 +6,10 @@ import {CurrentUserContext} from "../contexts/CurrentUserContext";
 
 export function EditProfilePopup (props) {
     const { currentUser } = useContext(CurrentUserContext)
-    const { values, handleChange, errors, isValid, setValues, setIsValid, setErrors } = useForm();
+    const { values, handleChange, errors, isValid, setValues, setIsValid, setErrors } = useForm({
+        name: '',
+        about: ''
+    });
 
     function handleSubmit(e) {
         e.preventDefault();

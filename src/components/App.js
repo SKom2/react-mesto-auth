@@ -16,7 +16,7 @@ import {ProtectedRouteElement} from "./ProtectedRoute";
 import {InfoToolTip} from "./InfoToolTip";
 import * as Auth from "../modules/Auth";
 
-function App() {
+function App({history}) {
     const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
     const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
     const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
@@ -27,10 +27,13 @@ function App() {
     const [selectedCard, setSelectedCard] = useState({});
     const [currentUser, setCurrentUser] = useState({});
     const [cards, setCards] = useState([]);
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
-    const [isSuccessful, setIsSuccessful] = useState();
-    const [token, setToken] = useState("")
+    const [isSuccessful, setIsSuccessful] = useState(true);
 
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const [userData, setUserData] = useState({
+        email: ''
+    })
+    const navigate = useNavigate()
     const api = new Api(apiConfig);
 
     useEffect(() => {
@@ -44,7 +47,49 @@ function App() {
             })
             .catch(err => console.log(`Ошибка получения карточек: ${err}`))
 
+        const jwt = localStorage.getItem('jwt');
+        if (jwt){
+            Auth.getContent(jwt).then((res) => {
+                if (res){
+                    const userData = {
+                        email: res.email
+                    }
+                    setIsLoggedIn(true);
+                    setUserData(userData)
+                    navigate("/mesto-react/", {replace: true})
+                }
+            });
+        }
     }, [])
+
+    function registerUser(values, isValid, navigate) {
+        if (isValid) {
+            Auth.register(values.email, values.password)
+                .then((res) => {
+                    navigate('/mesto-react/sign-in', {replace: true})
+                    setIsSuccessful(true)
+                    setInfoToolTipOpen(true)
+                })
+                .catch((err) => {
+                    setIsSuccessful(false)
+                    setInfoToolTipOpen(true)
+                });
+        }
+    }
+
+    function loginUser(values, isValid, navigate) {
+        if (isValid) {
+            Auth.authorize(values.email, values.password)
+                .then((res) => {
+                    localStorage.setItem('jwt', res.token)
+                    navigate('/mesto-react', {replace: true})
+                })
+                .catch((err) => {
+                    setIsSuccessful(false)
+                    setInfoToolTipOpen(true)
+                });
+        }
+    }
 
     function handleEditProfileClick() {
         setEditProfilePopupOpen(true);
@@ -147,62 +192,12 @@ function App() {
             })
     }
 
-    function handleLogin() {
-        setIsLoggedIn(true)
-    }
-
-    function registerUser(values, isValid, navigate) {
-        if (isValid) {
-            Auth.register(values.email, values.password)
-                .then((res) => {
-                    // localStorage.setItem('jwt', res.jwt)
-                    // setToken(res.jwt)
-                    navigate('/mesto-react/sign-in', {replace: true})
-                    setIsSuccessful(true)
-                    setInfoToolTipOpen(true)
-                })
-                .catch((err) => {
-                    setIsSuccessful(false)
-                    setInfoToolTipOpen(true)
-                });
-        }
-    }
-
-    function loginUser(values, isValid, navigate) {
-        if (isValid) {
-            Auth.authorize(values.email, values.password)
-                .then(() => {
-                    handleLogin();
-                    navigate('/mesto-react', {replace: true})
-                })
-                .catch((err) => {
-                    setIsSuccessful(false)
-                    setInfoToolTipOpen(true)
-                });
-        }
-    }
-
-    // function tokenCheck () {
-    //     // eslint-disable-next-line react-hooks/rules-of-hooks
-    //     const navigate = useNavigate()
-    //     const jwt = localStorage.getItem('jwt');
-    //     if (jwt){
-    //         // проверим токен
-    //         Auth.getContent(jwt).then((res) => {
-    //             if (res){
-    //                 // авторизуем пользователя
-    //                 setIsLoggedIn(true);
-    //                 navigate("/mesto-react/", {replace: true})
-    //             }
-    //         });
-    //     }
-    // }
-
     return (
         <CurrentUserContext.Provider value={{ currentUser, cards }}>
             <Routes>
                 <Route path="/mesto-react/" element={<ProtectedRouteElement loggedIn={isLoggedIn}
                                                                 element={Main}
+                                                                userData={userData}
                                                                 onEditProfile = {handleEditProfileClick}
                                                                 onAddPlace = {handleAddPlaceClick}
                                                                 onEditAvatar = {handleEditAvatarClick}

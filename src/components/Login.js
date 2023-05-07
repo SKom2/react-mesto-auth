@@ -10,10 +10,11 @@ export function Login(props) {
         email: '',
         password: ''
     });
+    const navigate = useNavigate()
 
     function handleSubmit(e) {
         e.preventDefault();
-        props.loginUser(values, isValid)
+        props.loginUser(values, isValid, navigate)
     }
 
     return (

@@ -15,6 +15,8 @@ import {Routes, Route, useNavigate} from "react-router-dom";
 import {ProtectedRouteElement} from "./ProtectedRoute";
 import {InfoToolTip} from "./InfoToolTip";
 import * as Auth from "../modules/Auth";
+import {NavBar} from "./NavBar";
+import {Header} from "./Header";
 
 function App() {
     const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
@@ -33,10 +35,24 @@ function App() {
     const [userData, setUserData] = useState({
         email: ''
     })
-    const navigate = useNavigate()
+
+    const [isMenuOpened, setMenuOpened] = useState(true );
+    const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 700);
+
     const api = new Api(apiConfig);
+    const navigate = useNavigate()
 
     useEffect(() => {
+        const jwt = localStorage.getItem('jwt');
+        if (jwt){
+            Auth.getContent(jwt).then((res) => {
+                if (res){
+                    setIsLoggedIn(true);
+                    setUserData({email: res.data.email})
+                    navigate("/mesto-react", {replace: true})
+                }
+            });
+        }
         api.getProfile()
             .then((userData) => {
                 setCurrentUser(userData)
@@ -46,26 +62,32 @@ function App() {
                 setCards(cardsData);
             })
             .catch(err => console.log(`Ошибка получения карточек: ${err}`))
+        const handleResize = () => {
+            setIsDesktop(window.innerWidth >= 700);
+        };
 
-        const jwt = localStorage.getItem('jwt');
-        if (jwt){
-            Auth.getContent(jwt).then((res) => {
-                if (res){
-                    setIsLoggedIn(true);
-                    setUserData({email: res.data.email})
-                    navigate("/mesto-react/", {replace: true})
-                }
-            });
-        }
+        window.addEventListener("resize", handleResize);
+
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
     }, [])
 
-    function registerUser(values, isValid) {
+    function handleMenuOpen() {
+        setMenuOpened(!isMenuOpened);
+    }
+
+    function signOut(){
+        localStorage.removeItem('jwt');
+    }
+
+    function registerUser(values, isValid, navigate) {
         if (isValid) {
             Auth.register(values.email, values.password)
                 .then(() => {
-                    navigate('/mesto-react/sign-in', {replace: true})
                     setIsSuccessful(true)
                     setInfoToolTipOpen(true)
+                    navigate('/mesto-react/sign-in', {replace: true})
                 })
                 .catch(() => {
                     setIsSuccessful(false)
@@ -74,12 +96,14 @@ function App() {
         }
     }
 
-    function loginUser(values, isValid) {
+    function loginUser(values, isValid, navigate) {
         if (isValid) {
             Auth.authorize(values.email, values.password)
                 .then((res) => {
                     localStorage.setItem('jwt', res.token)
-                    navigate('/mesto-react/', {replace: true})
+                    setUserData({email: values.email})
+                    setIsLoggedIn(true)
+                    navigate('/mesto-react', {replace: true})
                 })
                 .catch(() => {
                     setIsSuccessful(false)
@@ -191,19 +215,30 @@ function App() {
 
     return (
         <CurrentUserContext.Provider value={{ currentUser, cards }}>
-            <Routes>
-                <Route path="/mesto-react/" element={<ProtectedRouteElement loggedIn={isLoggedIn}
-                                                                element={Main}
-                                                                userData={userData}
-                                                                onEditProfile = {handleEditProfileClick}
-                                                                onAddPlace = {handleAddPlaceClick}
-                                                                onEditAvatar = {handleEditAvatarClick}
-                                                                onCardClick = {handleCardImageClick}
-                                                                onCardDeleteIconClick={handleDeleteIconClick}
-                                                                onCardLike = {handleCardLike}/>}/>
-                <Route path="/mesto-react/sign-in" element={<Login loginUser={loginUser}/>}/>
-                <Route path="/mesto-react/sign-up" element={<Register registerUser={registerUser}/>}/>
-            </Routes>
+            {/*<NavBar*/}
+            {/*    loggedIn={isLoggedIn}*/}
+            {/*    way={props.way}*/}
+            {/*    userData={userData}*/}
+            {/*    text={props.text}*/}
+            {/*    isMenuOpened={isMenuOpened}*/}
+            {/*/>*/}
+            <div className="content">
+                {/*<Header />*/}
+                <Routes>
+                    <Route path="/mesto-react/" element={<ProtectedRouteElement loggedIn={isLoggedIn}
+                                                                    element={Main}
+                                                                    userData={userData}
+                                                                    onEditProfile = {handleEditProfileClick}
+                                                                    onAddPlace = {handleAddPlaceClick}
+                                                                    onEditAvatar = {handleEditAvatarClick}
+                                                                    onCardClick = {handleCardImageClick}
+                                                                    onCardDeleteIconClick={handleDeleteIconClick}
+                                                                    onCardLike = {handleCardLike}
+                    />}/>
+                    <Route path="/mesto-react/sign-in" element={<Login loginUser={loginUser}/>}/>
+                    <Route path="/mesto-react/sign-up" element={<Register registerUser={registerUser}/>}/>
+                </Routes>
+            </div>
             <EditProfilePopup
               isOpen={isEditProfilePopupOpen}
               onClose={closeAllPopups}

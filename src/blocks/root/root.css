@@ -1,0 +1,8 @@
+.root{
+    position: relative;
+    transition: .5s;
+}
+
+.root_active {
+    transform: translateY(106px);
+}

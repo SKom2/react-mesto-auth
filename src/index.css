@@ -43,11 +43,16 @@
 @import url(./blocks/form/__button/form__button.css);
 @import url(./blocks/form/__button/_inactive/form__button_inactive.css);
 
+@import url(blocks/menu/menu.css);
+@import url(blocks/menu/_closed/menu_closed.css);
+@import url(blocks/menu/_opened/menu_opened.css);
+
 @import url(./blocks/header/header.css);
 @import url(./blocks/header/__logo/header__logo.css);
 @import url(./blocks/header/__link/header__link.css);
-@import url(./blocks/header/__info/header__info.css);
 @import url(./blocks/header/__email/header__email.css);
+@import url(./blocks/header/__burger-btn/header__burger-btn.css);
+@import url(./blocks/header/__burger_close-btn/header__burger_close-btn.css);
 
 @import url(./blocks/main/main.css);
 @import url(./blocks/main/__profile/main__profile.css);

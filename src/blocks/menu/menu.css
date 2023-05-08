@@ -15,10 +15,6 @@
     display: none;
 }
 
-.menu:not(:last-child){
-    gap: 24px;
-}
-
 @media screen and (max-width: 700px) {
     .menu{
         transform: translateY(-100%);

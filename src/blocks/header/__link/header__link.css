@@ -4,13 +4,14 @@
     font-size: 18px;
     line-height: 22px;
     transition: color .2s linear;
+
 }
 
 .header__link:hover{
     color: #A9A9A9;
 }
 
-@media screen and (max-width: 900px) and (min-width: 700px){
+@media screen and (max-width: 900px){
     .header__link{
         padding-right: 30px;
     }
@@ -18,7 +19,7 @@
 
 @media screen and (max-width: 320px){
     .header__link{
-        font-size: 18px;
-        line-height: 22px;
+        font-size: 14px;
+        line-height: 17px;
     }
 }

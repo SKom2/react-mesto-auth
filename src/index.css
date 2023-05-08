@@ -6,6 +6,9 @@
 @import url(./blocks/root/root.css);
 @import url(./blocks/root/__container/root__container.css);
 
+@import url(./blocks/content/content.css);
+@import url(./blocks/content/_active/content_active.css);
+
 @import url(./blocks/button/button.css);
 
 @import url(./blocks/authorization/authorization.css);
@@ -46,6 +49,10 @@
 @import url(blocks/menu/menu.css);
 @import url(blocks/menu/_closed/menu_closed.css);
 @import url(blocks/menu/_opened/menu_opened.css);
+@import url(./blocks/menu/__link/menu__link.css);
+@import url(./blocks/menu/__items/menu__items.css);
+@import url(./blocks/menu/__item/menu__item.css);
+@import url(./blocks/menu/__email/menu__email.css);
 
 @import url(./blocks/header/header.css);
 @import url(./blocks/header/__logo/header__logo.css);

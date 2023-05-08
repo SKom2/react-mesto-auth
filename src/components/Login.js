@@ -1,5 +1,4 @@
 import React from "react";
-import {Header} from "./Header";
 import {Input} from "./Input";
 import {AuthorizationForm} from "./AuthorizationForm";
 import {useForm} from "../hooks/useForm";
@@ -19,7 +18,6 @@ export function Login(props) {
 
     return (
         <>
-            <Header text="Регистрация" way="/mesto-react/sign-up"/>
             <AuthorizationForm
                 text="Вход"
                 buttonName="Войти"

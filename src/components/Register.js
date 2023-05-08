@@ -1,4 +1,3 @@
-import {Header} from "./Header";
 import React from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {Input} from "./Input";
@@ -20,7 +19,6 @@ export function Register(props) {
 
     return (
         <>
-            <Header text="Войти" way="/mesto-react/sign-in"/>
             <AuthorizationForm
                 text="Регистрация"
                 buttonName="Зарегистрироваться"
@@ -53,14 +51,14 @@ export function Register(props) {
             </AuthorizationForm>
             <p style={{
                 color: "white",
-                padding: 0,
-                margin: '15px 0 0',
                 textAlign: "center",
+                margin: "20px 30px 0",
+                padding: "0 0 40px 0",
                 fontSize: "14px",
-                lineHeight: '17px'
+                lineHeight: '17px',
             }}>
                 Уже зарегистрированы? <Link to="/mesto-react/sign-in"
-                                            style={{color: "white", textDecoration: "none"}}>Войти</Link></p>
+                                            style={{color: "white", textDecoration: "none" }}>Войти</Link></p>
         </>
     )
 }

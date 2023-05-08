@@ -1,7 +1,6 @@
 import React, {useContext} from "react";
 import {Card} from "./Card";
 import {CurrentUserContext} from "../contexts/CurrentUserContext";
-import {Header} from "./Header";
 import {Footer} from "./Footer";
 
 export function Main(props) {
@@ -9,12 +8,6 @@ export function Main(props) {
 
     return(
         <>
-            <Header
-                userData={props.userData}
-                text="Выйти"
-                way="/mesto-react/sign-in"
-                onMenuOpen={props.onMenuOpen}
-            />
             <main className="main">
                 <section className="main__profile profile root__container">
                     <div className="profile__body">

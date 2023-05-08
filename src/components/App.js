@@ -11,7 +11,7 @@ import {EditProfilePopup} from "./EditProfilePopup";
 import {EditAvatarPopup} from "./EditAvatarPopup";
 import {AddPlacePopup} from "./AddPlacePopup";
 import {ConfirmationPopup} from "./ConfirmationPopup";
-import {Routes, Route, useNavigate} from "react-router-dom";
+import {Routes, Route, useNavigate, useLocation} from "react-router-dom";
 import {ProtectedRouteElement} from "./ProtectedRoute";
 import {InfoToolTip} from "./InfoToolTip";
 import * as Auth from "../modules/Auth";
@@ -30,7 +30,6 @@ function App() {
     const [currentUser, setCurrentUser] = useState({});
     const [cards, setCards] = useState([]);
     const [isSuccessful, setIsSuccessful] = useState(true);
-
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [userData, setUserData] = useState({
         email: ''
@@ -40,6 +39,8 @@ function App() {
     const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 700);
 
     const api = new Api(apiConfig);
+
+    const location = useLocation();
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -68,17 +69,16 @@ function App() {
 
         window.addEventListener("resize", handleResize);
 
-        return () => {
-            window.removeEventListener("resize", handleResize);
-        };
     }, [])
 
-    function handleMenuOpen() {
+    function handleMenuIconClick() {
         setMenuOpened(!isMenuOpened);
     }
 
     function signOut(){
         localStorage.removeItem('jwt');
+        setUserData('')
+        setIsLoggedIn(false)
     }
 
     function registerUser(values, isValid, navigate) {
@@ -215,15 +215,26 @@ function App() {
 
     return (
         <CurrentUserContext.Provider value={{ currentUser, cards }}>
-            {/*<NavBar*/}
-            {/*    loggedIn={isLoggedIn}*/}
-            {/*    way={props.way}*/}
-            {/*    userData={userData}*/}
-            {/*    text={props.text}*/}
-            {/*    isMenuOpened={isMenuOpened}*/}
-            {/*/>*/}
-            <div className="content">
-                {/*<Header />*/}
+            {isLoggedIn &&
+                <NavBar
+                loggedIn={isLoggedIn}
+                userData={userData}
+                text={location.pathname === "/mesto-react/sign-in" ? "Регистрация" : "/mesto-react/sign-up" ? "Выйти" : "Войти"}
+                way={location.pathname === "/mesto-react/sign-in" ? "/mesto-react/sign-up" : "/mesto-react/sign-up" ? "/mesto-react/sign-in" : "/mesto-react/sign-in"}
+                isMenuOpened={isMenuOpened}
+                signOut={signOut}
+            />
+            }
+            <div className={`content ${(isMenuOpened && window.innerWidth < 700 && isLoggedIn) ? 'content_active' : ''}`}>
+                <Header
+                    loggedIn={isLoggedIn}
+                    isMenuOpened={isMenuOpened}
+                    signOut={signOut}
+                    isDesktop={isDesktop}
+                    onMenuIconClick={handleMenuIconClick}
+                    text={location.pathname === "/mesto-react/sign-in" ? "Регистрация" : "/mesto-react/sign-up" ? "Выйти" : "Войти"}
+                    way={location.pathname === "/mesto-react/sign-in" ? "/mesto-react/sign-up" : "/mesto-react/sign-up" ? "/mesto-react/sign-in" : "/mesto-react/sign-in"}
+                />
                 <Routes>
                     <Route path="/mesto-react/" element={<ProtectedRouteElement loggedIn={isLoggedIn}
                                                                     element={Main}

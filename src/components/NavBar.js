@@ -1,18 +1,16 @@
 import {Link} from "react-router-dom";
 
 export function NavBar(props) {
-    function signOut(){
-        localStorage.removeItem('jwt');
-    }
-
     return(
-        <>
-            <ul className={`header__menu menu ${props.isMenuOpened ? 'menu_opened' : 'menu_closed'}`}>
-                <li>
-                    <Link to={props.way} onClick={signOut} className="header__link">{props.text}</Link>
+        <div className={`menu ${props.isMenuOpened && window.innerWidth < 700 ? 'menu_opened' : 'menu_closed'}`}>
+            <ul className="menu__items">
+                <li className="menu__item">
+                    <p className="menu__email">{props.userData.email}</p>
+                </li>
+                <li className="menu__item">
+                    <Link to={props.way} onClick={props.signOut} className="menu__link">{props.text}</Link>
                 </li>
             </ul>
-
-        </>
+        </div>
     )
 }

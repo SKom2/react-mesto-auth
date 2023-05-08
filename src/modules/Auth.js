@@ -36,5 +36,5 @@ export const authorize = (email, password) => {
 };
 
 export const getContent = (token) => {
-    return makeRequest('/users/me', "GET", null, token )
+    return makeRequest('/users/me', "GET", null, token)
 }

@@ -20,7 +20,8 @@ export function PopupWithForm({button, children, isLoad, isOpen, isValid, loadBu
                 <form className="popup__form form" id={`${name}_form`} noValidate name={name} onSubmit={onSubmit}>
                     <h2 className="form__title">{title}</h2>
                     {children}
-                    <button className={`form__button ${!isValid ? "form__button_inactive" : ""}`} disabled={!isValid} type="submit">{isLoad ? loadButton : button}</button>
+                    <button className={`form__button ${!isValid ? "form__button_inactive" : ""}`} disabled={!isValid}
+                            type="submit">{isLoad ? loadButton : button}</button>
                 </form>
             </div>
         </div>

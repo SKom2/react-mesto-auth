@@ -13,8 +13,8 @@ export class Api {
 
     getProfile() {
         return fetch(`${this._config.url}/users/me`, {
-                headers: this._config.headers
-            })
+            headers: this._config.headers
+        })
             .then((res) => this._getResponseData(res));
     }
 
@@ -24,8 +24,9 @@ export class Api {
         })
             .then((res) => this._getResponseData(res))
     }
+
     editProfile(data) {
-        return fetch(`${this._config.url}/users/me`,    {
+        return fetch(`${this._config.url}/users/me`, {
             method: 'PATCH',
             headers: this._config.headers,
             body: JSON.stringify({
@@ -41,13 +42,14 @@ export class Api {
             method: 'POST',
             headers: this._config.headers,
             body: JSON.stringify({
-                name:  data.name,
+                name: data.name,
                 link: data.link
             })
         })
             .then((res) => this._getResponseData(res))
     }
-    handleControlLikes(request, cardId){
+
+    handleControlLikes(request, cardId) {
         return fetch(`${this._config.url}/cards/${cardId}/likes`, {
             method: request,
             headers: this._config.headers,

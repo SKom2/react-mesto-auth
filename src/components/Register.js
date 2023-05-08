@@ -1,5 +1,5 @@
 import React from "react";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {Input} from "./Input";
 import {AuthorizationForm} from "./AuthorizationForm";
 import {useForm} from "../hooks/useForm";
@@ -49,16 +49,6 @@ export function Register(props) {
                 />
                 <span className="form__input-error password-error">{errors.password}</span>
             </AuthorizationForm>
-            <p style={{
-                color: "white",
-                textAlign: "center",
-                margin: "20px 30px 0",
-                padding: "0 0 40px 0",
-                fontSize: "14px",
-                lineHeight: '17px',
-            }}>
-                Уже зарегистрированы? <Link to="/mesto-react/sign-in"
-                                            style={{color: "white", textDecoration: "none" }}>Войти</Link></p>
         </>
     )
 }

@@ -1,6 +1,6 @@
 import Logo from "../images/header/Vector.svg";
 import close from "../images/popup/Close.svg";
-import {Link} from "react-router-dom";
+import {Link, Route, Routes} from "react-router-dom";
 
 export function Header(props) {
     return (
@@ -9,21 +9,33 @@ export function Header(props) {
                 <img src={Logo} alt="Место" className="header__logo"></img>
                 {props.loggedIn && (!props.isMenuOpened ? (
                     <div className="header__burger-btn" onClick={props.onMenuIconClick}>
-                        <span />
+                        <span/>
                     </div>
                 ) : (
                     <div className="header__burger-close-btn">
                         <img
                             onClick={props.onMenuIconClick}
                             src={close}
-                            style={{ width: "20px", height: "20px" }}
+                            style={{width: "20px", height: "20px"}}
                             alt="Close"
                         />
                     </div>
                 ))}
-                {(props.isDesktop || !props.loggedIn) && (
-                        <Link to={props.way} onClick={props.signOut} className="header__link">{props.text}</Link>
-                )}
+                <div className="header__menu">
+                    {props.loggedIn && props.isDesktop &&
+                        <p className="header__email menu__email">{props.userData.email}</p>
+                    }
+                    {(props.isDesktop || !props.loggedIn) && (
+                        <Routes>
+                            <Route path='/mesto-react/sign-up'
+                                   element={<Link to='/mesto-react/sign-in' className="header__link">{'Войти'}</Link>}/>
+                            <Route path='/mesto-react/sign-in' element={<Link to='/mesto-react/sign-up'
+                                                                              className="header__link">{'Регистрация'}</Link>}/>
+                            <Route path='/mesto-react' element={<Link to='/mesto-react/sign-in' onClick={props.signOut}
+                                                                      className="header__link">{'Выйти'}</Link>}/>
+                        </Routes>
+                    )}
+                </div>
             </header>
         </>
     );

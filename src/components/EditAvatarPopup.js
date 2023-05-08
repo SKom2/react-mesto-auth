@@ -4,7 +4,7 @@ import {useForm} from "../hooks/useForm";
 import {useEffect} from "react";
 
 export function EditAvatarPopup(props) {
-    const { values, handleChange, resetForm, errors, isValid, setIsValid, setErrors } = useForm({
+    const {values, handleChange, resetForm, errors, isValid, setIsValid, setErrors} = useForm({
         avatar: ''
     });
 
@@ -24,7 +24,7 @@ export function EditAvatarPopup(props) {
         }
     }, [props.isOpen, setErrors, setIsValid, resetForm])
 
-    return(
+    return (
         <PopupWithForm
             name="edit-avatar"
             title="Обновить аватар"

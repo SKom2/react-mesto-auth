@@ -4,7 +4,7 @@ import {useForm} from "../hooks/useForm";
 import {useEffect} from "react";
 
 export function AddPlacePopup(props) {
-    const { values, handleChange, resetForm, errors, isValid, setErrors, setIsValid } = useForm({
+    const {values, handleChange, resetForm, errors, isValid, setErrors, setIsValid} = useForm({
         name: '',
         link: ''
     });
@@ -48,7 +48,7 @@ export function AddPlacePopup(props) {
                 maxLength="30"
                 value={values.name || ''}
                 onChange={handleChange}
-                />
+            />
             <span className="form__input-error photo-name-error">{errors.name}</span>
             <Input
                 type="url"

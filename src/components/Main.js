@@ -6,7 +6,7 @@ import {Footer} from "./Footer";
 export function Main(props) {
     const {currentUser, cards} = useContext(CurrentUserContext)
 
-    return(
+    return (
         <>
             <main className="main">
                 <section className="main__profile profile root__container">
@@ -48,7 +48,7 @@ export function Main(props) {
                         />
                     ))}
                 </section>
-                <Footer />
+                <Footer/>
             </main>
         </>
     )

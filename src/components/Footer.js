@@ -1,5 +1,5 @@
 export function Footer() {
-    return(
+    return (
         <footer className="footer root__container">
             <p className="footer__text">© 2023 Mesto Russia</p>
         </footer>

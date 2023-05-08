@@ -4,9 +4,9 @@ import {useForm} from "../hooks/useForm";
 import {useContext, useEffect} from "react";
 import {CurrentUserContext} from "../contexts/CurrentUserContext";
 
-export function EditProfilePopup (props) {
-    const { currentUser } = useContext(CurrentUserContext)
-    const { values, handleChange, errors, isValid, setValues, setIsValid, setErrors } = useForm({
+export function EditProfilePopup(props) {
+    const {currentUser} = useContext(CurrentUserContext)
+    const {values, handleChange, errors, isValid, setValues, setIsValid, setErrors} = useForm({
         name: '',
         about: ''
     });
@@ -28,7 +28,7 @@ export function EditProfilePopup (props) {
             setIsValid(true)
             setErrors({})
         }
-    },[ props.isOpen, currentUser, setValues, setIsValid, setErrors ])
+    }, [props.isOpen, currentUser, setValues, setIsValid, setErrors])
 
     return (
         <PopupWithForm

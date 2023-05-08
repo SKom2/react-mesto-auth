@@ -1,7 +1,7 @@
 import '../App.css';
 import {Main} from "./Main";
-import { Login } from "./Login";
-import { Register } from "./Register";
+import {Login} from "./Login";
+import {Register} from "./Register";
 import {ImagePopup} from "./ImagePopup";
 import React, {useEffect, useState} from "react";
 import {Api} from "../modules/Api";
@@ -11,7 +11,7 @@ import {EditProfilePopup} from "./EditProfilePopup";
 import {EditAvatarPopup} from "./EditAvatarPopup";
 import {AddPlacePopup} from "./AddPlacePopup";
 import {ConfirmationPopup} from "./ConfirmationPopup";
-import {Routes, Route, useNavigate, useLocation} from "react-router-dom";
+import {Routes, Route, useNavigate} from "react-router-dom";
 import {ProtectedRouteElement} from "./ProtectedRoute";
 import {InfoToolTip} from "./InfoToolTip";
 import * as Auth from "../modules/Auth";
@@ -34,48 +34,50 @@ function App() {
     const [userData, setUserData] = useState({
         email: ''
     })
-
-    const [isMenuOpened, setMenuOpened] = useState(true );
+    const [isMenuOpened, setMenuOpened] = useState(true);
     const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 700);
+    const [promptText, setPromptText] = useState('')
 
     const api = new Api(apiConfig);
 
-    const location = useLocation();
     const navigate = useNavigate()
 
     useEffect(() => {
         const jwt = localStorage.getItem('jwt');
-        if (jwt){
+        if (jwt) {
             Auth.getContent(jwt).then((res) => {
-                if (res){
+                if (res) {
                     setIsLoggedIn(true);
                     setUserData({email: res.data.email})
                     navigate("/mesto-react", {replace: true})
                 }
             });
         }
-        api.getProfile()
-            .then((userData) => {
-                setCurrentUser(userData)
-            })
-        api.getCards()
-            .then((cardsData) => {
-                setCards(cardsData);
-            })
-            .catch(err => console.log(`Ошибка получения карточек: ${err}`))
+        if (isLoggedIn) {
+            api.getProfile()
+                .then((userData) => {
+                    setCurrentUser(userData)
+                })
+                .catch(err => console.log(`Ошибка получения данных пользователя: ${err}`))
+            api.getCards()
+                .then((cardsData) => {
+                    setCards(cardsData);
+                })
+                .catch(err => console.log(`Ошибка получения карточек: ${err}`))
+        }
         const handleResize = () => {
             setIsDesktop(window.innerWidth >= 700);
         };
 
         window.addEventListener("resize", handleResize);
 
-    }, [])
+    }, [isLoggedIn])
 
     function handleMenuIconClick() {
         setMenuOpened(!isMenuOpened);
     }
 
-    function signOut(){
+    function signOut() {
         localStorage.removeItem('jwt');
         setUserData('')
         setIsLoggedIn(false)
@@ -87,9 +89,11 @@ function App() {
                 .then(() => {
                     setIsSuccessful(true)
                     setInfoToolTipOpen(true)
+                    setPromptText("Вы успешно зарегистрировались!")
                     navigate('/mesto-react/sign-in', {replace: true})
                 })
                 .catch(() => {
+                    setPromptText("Что-то пошло не так! Попробуйте ещё раз.")
                     setIsSuccessful(false)
                     setInfoToolTipOpen(true)
                 });
@@ -108,6 +112,7 @@ function App() {
                 .catch(() => {
                     setIsSuccessful(false)
                     setInfoToolTipOpen(true)
+                    setPromptText("Что-то пошло не так! Попробуйте ещё раз.")
                 });
         }
     }
@@ -120,7 +125,7 @@ function App() {
         setAddPlacePopupOpen(true)
     }
 
-    function handleEditAvatarClick(){
+    function handleEditAvatarClick() {
         setEditAvatarPopupOpen(true);
     }
 
@@ -214,85 +219,84 @@ function App() {
     }
 
     return (
-        <CurrentUserContext.Provider value={{ currentUser, cards }}>
+        <CurrentUserContext.Provider value={{currentUser, cards}}>
             {isLoggedIn &&
                 <NavBar
-                loggedIn={isLoggedIn}
-                userData={userData}
-                text={location.pathname === "/mesto-react/sign-in" ? "Регистрация" : "/mesto-react/sign-up" ? "Выйти" : "Войти"}
-                way={location.pathname === "/mesto-react/sign-in" ? "/mesto-react/sign-up" : "/mesto-react/sign-up" ? "/mesto-react/sign-in" : "/mesto-react/sign-in"}
-                isMenuOpened={isMenuOpened}
-                signOut={signOut}
-            />
+                    loggedIn={isLoggedIn}
+                    userData={userData}
+                    isMenuOpened={isMenuOpened}
+                    signOut={signOut}
+                />
             }
-            <div className={`content ${(isMenuOpened && window.innerWidth < 700 && isLoggedIn) ? 'content_active' : ''}`}>
+            <div
+                className={`content ${(isMenuOpened && window.innerWidth < 700 && isLoggedIn) ? 'content_active' : ''}`}>
                 <Header
+                    userData={userData}
                     loggedIn={isLoggedIn}
                     isMenuOpened={isMenuOpened}
                     signOut={signOut}
                     isDesktop={isDesktop}
                     onMenuIconClick={handleMenuIconClick}
-                    text={location.pathname === "/mesto-react/sign-in" ? "Регистрация" : "/mesto-react/sign-up" ? "Выйти" : "Войти"}
-                    way={location.pathname === "/mesto-react/sign-in" ? "/mesto-react/sign-up" : "/mesto-react/sign-up" ? "/mesto-react/sign-in" : "/mesto-react/sign-in"}
                 />
                 <Routes>
                     <Route path="/mesto-react/" element={<ProtectedRouteElement loggedIn={isLoggedIn}
-                                                                    element={Main}
-                                                                    userData={userData}
-                                                                    onEditProfile = {handleEditProfileClick}
-                                                                    onAddPlace = {handleAddPlaceClick}
-                                                                    onEditAvatar = {handleEditAvatarClick}
-                                                                    onCardClick = {handleCardImageClick}
-                                                                    onCardDeleteIconClick={handleDeleteIconClick}
-                                                                    onCardLike = {handleCardLike}
+                                                                                element={Main}
+                                                                                userData={userData}
+                                                                                onEditProfile={handleEditProfileClick}
+                                                                                onAddPlace={handleAddPlaceClick}
+                                                                                onEditAvatar={handleEditAvatarClick}
+                                                                                onCardClick={handleCardImageClick}
+                                                                                onCardDeleteIconClick={handleDeleteIconClick}
+                                                                                onCardLike={handleCardLike}
                     />}/>
                     <Route path="/mesto-react/sign-in" element={<Login loginUser={loginUser}/>}/>
                     <Route path="/mesto-react/sign-up" element={<Register registerUser={registerUser}/>}/>
                 </Routes>
             </div>
             <EditProfilePopup
-              isOpen={isEditProfilePopupOpen}
-              onClose={closeAllPopups}
-              onUpdateUser={handleUpdateUser}
-              isLoad={isLoad}
-            />
-            <EditAvatarPopup
-              onClose={closeAllPopups}
-              isOpen={isEditAvatarPopupOpen}
-              onUpdateAvatar={handleUpdateAvatar}
-              isLoad={isLoad}
-            />
-            <AddPlacePopup
-              onClose={closeAllPopups}
-              isOpen={isAddPlacePopupOpen}
-              onAddPlace={handleAddPlaceSubmit}
-              isLoad={isLoad}
-            />
-            {selectedCard &&
-            <ConfirmationPopup
+                isOpen={isEditProfilePopupOpen}
                 onClose={closeAllPopups}
-                isOpen={isConfirmationPopupOpen}
-                onCardDelete={handleCardDelete}
-                card={selectedCard}
+                onUpdateUser={handleUpdateUser}
                 isLoad={isLoad}
             />
+            <EditAvatarPopup
+                onClose={closeAllPopups}
+                isOpen={isEditAvatarPopupOpen}
+                onUpdateAvatar={handleUpdateAvatar}
+                isLoad={isLoad}
+            />
+            <AddPlacePopup
+                onClose={closeAllPopups}
+                isOpen={isAddPlacePopupOpen}
+                onAddPlace={handleAddPlaceSubmit}
+                isLoad={isLoad}
+            />
+            {selectedCard &&
+                <ConfirmationPopup
+                    onClose={closeAllPopups}
+                    isOpen={isConfirmationPopupOpen}
+                    onCardDelete={handleCardDelete}
+                    card={selectedCard}
+                    isLoad={isLoad}
+                />
             }
             {selectedCard && (
-            <ImagePopup
-                id={selectedCard._id}
-                link={selectedCard.link}
-                name={selectedCard.name}
-                isOpen={isClickCardPopupOpen}
-                onClose={closeAllPopups}
-            />
+                <ImagePopup
+                    id={selectedCard._id}
+                    link={selectedCard.link}
+                    name={selectedCard.name}
+                    isOpen={isClickCardPopupOpen}
+                    onClose={closeAllPopups}
+                />
             )}
             <InfoToolTip
+                promptText={promptText}
                 isOpen={isInfoToolTipOpen}
                 onClose={closeAllPopups}
-                isSuccesful={isSuccessful}
+                isSuccessful={isSuccessful}
             />
         </CurrentUserContext.Provider>
-      );
-    }
+    );
+}
 
 export default App;

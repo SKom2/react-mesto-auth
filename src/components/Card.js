@@ -25,7 +25,7 @@ export function Card(props) {
                 <img
                     alt=""
                     className="card__image"
-                    style={{ backgroundImage: `url(${props.card.link})` }}
+                    style={{backgroundImage: `url(${props.card.link})`}}
                     onClick={() => props.onCardClick(props.card)}
                 ></img>
                 <div className="card__heading">

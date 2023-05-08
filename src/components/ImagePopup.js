@@ -1,7 +1,7 @@
 export function ImagePopup(props) {
     return (
         <div
-            className={`popup popup_type_photo ${props.isOpen ? "popup_opened" : ""}` }
+            className={`popup popup_type_photo ${props.isOpen ? "popup_opened" : ""}`}
             id={`${props.id}`}
             onClick={props.onClose}
         >

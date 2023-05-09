@@ -44,6 +44,11 @@ function App() {
     const navigate = useNavigate()
 
     useEffect(() => {
+        const jwt = localStorage.getItem('jwt')
+        setToken(jwt)
+    }, [])
+
+    useEffect(() => {
         if (!token) {
             return;
         }
@@ -79,7 +84,7 @@ function App() {
     function registerUser(values, isValid, navigate) {
         if (isValid) {
             Auth.register(values.email, values.password)
-                .then(() => {
+                .then((res) => {
                     setIsSuccessful(true)
                     setInfoToolTipOpen(true)
                     setPromptText("Вы успешно зарегистрировались!")
@@ -106,7 +111,7 @@ function App() {
                 .catch(() => {
                     setIsSuccessful(false)
                     setInfoToolTipOpen(true)
-                    setPromptText("Что-то пошло не так! Попробуйте ещё раз.")
+                    setPromptText("Не правильный логин или пароль!")
                 });
         }
     }

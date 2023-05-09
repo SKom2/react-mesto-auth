@@ -12,7 +12,7 @@ export function AuthorizationForm(props) {
                 <button className={`authorization__button`} type="submit">
                     {props.buttonName}
                 </button>
-                {location.pathname === "/mesto-react/sign-up" && (
+                {location.pathname === "/react-mesto-auth/sign-up" && (
                     <p style={{
                         color: "white",
                         textAlign: "center",
@@ -21,7 +21,7 @@ export function AuthorizationForm(props) {
                         fontSize: "14px",
                         lineHeight: '17px',
                     }}>
-                        Уже зарегистрированы? <Link to="/mesto-react/sign-in"
+                        Уже зарегистрированы? <Link to="/react-mesto-auth/sign-in"
                                                     style={{color: "white", textDecoration: "none"}}>Войти</Link></p>
                 )}
             </form>

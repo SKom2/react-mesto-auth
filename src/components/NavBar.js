@@ -9,7 +9,7 @@ export function NavBar(props) {
                 </li>
                 <li className="menu__item">
                     <Routes>
-                        <Route path='/mesto-react' element={<Link to='/mesto-react/sign-in' onClick={props.signOut}
+                        <Route path='/react-mesto-auth' element={<Link to='/react-mesto-auth/sign-in' onClick={props.signOut}
                                                                   className="menu__link">{'Выйти'}</Link>}/>
                     </Routes>
                 </li>

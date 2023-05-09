@@ -37,22 +37,21 @@ function App() {
     const [isMenuOpened, setMenuOpened] = useState(true);
     const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 700);
     const [promptText, setPromptText] = useState('')
+    const [token, setToken] = useState('')
 
     const api = new Api(apiConfig);
 
     const navigate = useNavigate()
 
     useEffect(() => {
-        const jwt = localStorage.getItem('jwt');
-        if (jwt) {
-            Auth.getContent(jwt).then((res) => {
-                if (res) {
-                    setIsLoggedIn(true);
-                    setUserData({email: res.data.email})
-                    navigate("/mesto-react", {replace: true})
-                }
-            });
+        if (!token) {
+            return;
         }
+        Auth.getContent(token).then((res) => {
+            setIsLoggedIn(true);
+            setUserData({email: res.data.email})
+            navigate("/react-mesto-auth", {replace: true})
+        });
         if (isLoggedIn) {
             api.getProfile()
                 .then((userData) => {
@@ -71,16 +70,10 @@ function App() {
 
         window.addEventListener("resize", handleResize);
 
-    }, [isLoggedIn])
+    }, [isLoggedIn, token])
 
     function handleMenuIconClick() {
         setMenuOpened(!isMenuOpened);
-    }
-
-    function signOut() {
-        localStorage.removeItem('jwt');
-        setUserData('')
-        setIsLoggedIn(false)
     }
 
     function registerUser(values, isValid, navigate) {
@@ -90,7 +83,7 @@ function App() {
                     setIsSuccessful(true)
                     setInfoToolTipOpen(true)
                     setPromptText("Вы успешно зарегистрировались!")
-                    navigate('/mesto-react/sign-in', {replace: true})
+                    navigate('/react-mesto-auth/sign-in', {replace: true})
                 })
                 .catch(() => {
                     setPromptText("Что-то пошло не так! Попробуйте ещё раз.")
@@ -105,9 +98,10 @@ function App() {
             Auth.authorize(values.email, values.password)
                 .then((res) => {
                     localStorage.setItem('jwt', res.token)
+                    setToken(res.token)
                     setUserData({email: values.email})
                     setIsLoggedIn(true)
-                    navigate('/mesto-react', {replace: true})
+                    navigate('/react-mesto-auth', {replace: true})
                 })
                 .catch(() => {
                     setIsSuccessful(false)
@@ -115,6 +109,13 @@ function App() {
                     setPromptText("Что-то пошло не так! Попробуйте ещё раз.")
                 });
         }
+    }
+
+    function signOut() {
+        localStorage.removeItem('jwt');
+        setUserData('')
+        setIsLoggedIn(false)
+        setToken('')
     }
 
     function handleEditProfileClick() {
@@ -239,7 +240,7 @@ function App() {
                     onMenuIconClick={handleMenuIconClick}
                 />
                 <Routes>
-                    <Route path="/mesto-react/" element={<ProtectedRouteElement loggedIn={isLoggedIn}
+                    <Route path="/react-mesto-auth" element={<ProtectedRouteElement loggedIn={isLoggedIn}
                                                                                 element={Main}
                                                                                 userData={userData}
                                                                                 onEditProfile={handleEditProfileClick}
@@ -249,8 +250,8 @@ function App() {
                                                                                 onCardDeleteIconClick={handleDeleteIconClick}
                                                                                 onCardLike={handleCardLike}
                     />}/>
-                    <Route path="/mesto-react/sign-in" element={<Login loginUser={loginUser}/>}/>
-                    <Route path="/mesto-react/sign-up" element={<Register registerUser={registerUser}/>}/>
+                    <Route path="/react-mesto-auth/sign-in" element={<Login loginUser={loginUser}/>}/>
+                    <Route path="/react-mesto-auth/sign-up" element={<Register registerUser={registerUser}/>}/>
                 </Routes>
             </div>
             <EditProfilePopup

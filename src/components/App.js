@@ -50,7 +50,7 @@ function App() {
         Auth.getContent(token).then((res) => {
             setIsLoggedIn(true);
             setUserData({email: res.data.email})
-            navigate("/react-mesto-auth", {replace: true})
+            navigate("/", {replace: true})
         });
         if (isLoggedIn) {
             api.getProfile()
@@ -83,7 +83,7 @@ function App() {
                     setIsSuccessful(true)
                     setInfoToolTipOpen(true)
                     setPromptText("Вы успешно зарегистрировались!")
-                    navigate('/react-mesto-auth/sign-in', {replace: true})
+                    navigate('/sign-in', {replace: true})
                 })
                 .catch(() => {
                     setPromptText("Что-то пошло не так! Попробуйте ещё раз.")
@@ -101,7 +101,7 @@ function App() {
                     setToken(res.token)
                     setUserData({email: values.email})
                     setIsLoggedIn(true)
-                    navigate('/react-mesto-auth', {replace: true})
+                    navigate('/', {replace: true})
                 })
                 .catch(() => {
                     setIsSuccessful(false)
@@ -240,7 +240,7 @@ function App() {
                     onMenuIconClick={handleMenuIconClick}
                 />
                 <Routes>
-                    <Route path="/react-mesto-auth" element={<ProtectedRouteElement loggedIn={isLoggedIn}
+                    <Route path="/" element={<ProtectedRouteElement loggedIn={isLoggedIn}
                                                                                 element={Main}
                                                                                 userData={userData}
                                                                                 onEditProfile={handleEditProfileClick}
@@ -250,8 +250,8 @@ function App() {
                                                                                 onCardDeleteIconClick={handleDeleteIconClick}
                                                                                 onCardLike={handleCardLike}
                     />}/>
-                    <Route path="/react-mesto-auth/sign-in" element={<Login loginUser={loginUser}/>}/>
-                    <Route path="/react-mesto-auth/sign-up" element={<Register registerUser={registerUser}/>}/>
+                    <Route path="/sign-in" element={<Login loginUser={loginUser}/>}/>
+                    <Route path="/sign-up" element={<Register registerUser={registerUser}/>}/>
                 </Routes>
             </div>
             <EditProfilePopup

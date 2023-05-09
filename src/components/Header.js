@@ -27,11 +27,11 @@ export function Header(props) {
                     }
                     {(props.isDesktop || !props.loggedIn) && (
                         <Routes>
-                            <Route path='/react-mesto-auth/sign-up'
-                                   element={<Link to='/react-mesto-auth/sign-in' className="header__link">{'Войти'}</Link>}/>
-                            <Route path='/react-mesto-auth/sign-in' element={<Link to='/react-mesto-auth/sign-up'
+                            <Route path='/sign-up'
+                                   element={<Link to='/sign-in' className="header__link">{'Войти'}</Link>}/>
+                            <Route path='/sign-in' element={<Link to='/sign-up'
                                                                               className="header__link">{'Регистрация'}</Link>}/>
-                            <Route path='/react-mesto-auth' element={<Link to='/react-mesto-auth/sign-in' onClick={props.signOut}
+                            <Route path='/' element={<Link to='/sign-in' onClick={props.signOut}
                                                                       className="header__link">{'Выйти'}</Link>}/>
                         </Routes>
                     )}

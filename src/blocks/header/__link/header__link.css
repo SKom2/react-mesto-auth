@@ -11,6 +11,12 @@
     color: #A9A9A9;
 }
 
+@media screen and (max-width: 900px){
+    .header__link{
+        margin-right: 30px;
+    }
+}
+
 @media screen and (max-width: 320px){
     .header__link{
         font-size: 14px;
